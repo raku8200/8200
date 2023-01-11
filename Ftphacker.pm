@@ -1,6 +1,9 @@
 #!/usr/bin/perl
+use Net::FTP;
 use Term::ANSIColor;
 use 5.010;
+use strict;
+use warnings;
 my $datetime    = localtime;
 
 if ($^O =~ /MSWin32/) {system("cls"); }else { system("clear"); }
@@ -40,7 +43,7 @@ while(<$fh>) {
     eval {
         $ftp = Net::FTP->new($host, Port => 20, Timeout => 30 ) or die "Cannot connect to $host on port 20: $@";
         $ftp->login($username, $password) or die "Cannot login $username with $password on port 20: " . $ftp->message;
-        print  "230 Anonymous login ok, $host ,$username ,$password on port 20\n";
+        print  "230 Anonymous login ok: $host  'USERNAME=$username'  'PASSWORD=$password' on port 20\n";
     };
     if ($@) {
 
@@ -51,7 +54,7 @@ while(<$fh>) {
     eval {
         $ftp = Net::FTP->new($host, Port => 21, Timeout => 30 ) or die "Cannot connect to $host on port 21: $@";
         $ftp->login($username, $password) or die "Cannot login $username with $password on port 21: " . $ftp->message;
-        print  "230 Anonymous login ok, $host ,$username ,$password on port 21\n";
+        print  "200 Anonymous login ok: $host   'USERNAME=$username'   'PASSWORD=$password' on port 21\n";
     };
     if ($@) {
 
@@ -62,7 +65,7 @@ while(<$fh>) {
     eval {
         $ftp = Net::FTP->new($host, Port => 2121, Timeout => 30) or die "Cannot connect to $host on port 2121: $@";
         $ftp->login($username, $password) or die "Cannot login $username with $password on port 2121: " . $ftp->message;
-        print "230 Anonymous login ok, $host ,$username ,$password on port 2121\n";
+        print "200 Anonymous login ok: $host  'USERNAME=$username'  'PASSWORD=$password' on port 2121\n";
     };
     if ($@) {
 
@@ -72,3 +75,4 @@ while(<$fh>) {
 }
 
 close $fh;
+        
